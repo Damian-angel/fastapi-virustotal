@@ -39,6 +39,9 @@ opcion 2 usar docker Compose, ejecuta:
 docker-compose up
 ```
 
+abrir en el navegador: 
+http://localhost:8000/docs#/default/scan_file_scan_file__post
+
 ## Supociciones 
 
 1.Tiempo de espera para el informe:
