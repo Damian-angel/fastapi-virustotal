@@ -1,6 +1,6 @@
 # FastAPI VirusTotal Scanner
 
-Este es un servicio REST API construido con FastAPI que permite a los usuarios subir archivos y escanearlos en busca de malware utilizando la API de VirusTotal. El servicio está containerizado con Docker para facilitar su implementación.
+Este es un servicio REST API construido con FastAPI que permite a los usuarios subir archivos y escanearlos en busca de malware utilizando la API de VirusTotal. El servicio está containerizado con Docker.
 
 ---
 
@@ -27,7 +27,7 @@ Este es un servicio REST API construido con FastAPI que permite a los usuarios s
 
 Ejecuta el siguiente comando para construir la imagen de Docker:
 ```bash
-    docker build -t fastapi-virustotal .
+docker build -t fastapi-virustotal .
 ```
 
 Ejecuta el contenedor con:
@@ -42,6 +42,46 @@ docker-compose up
 abrir en el navegador: 
 http://localhost:8000/docs#/default/scan_file_scan_file__post
 
+## Uso de la API
+
+Escanear un archivo y obtener el informe automáticamente
+Endpoint: POST /scan-file/
+
+Descripción: Sube un archivo para escanearlo en VirusTotal y obtén el informe completo en una sola solicitud.
+
+Ejemplo de solicitud:
+
+```bash
+
+curl -X POST -F "file=@/path/to/your/file" http://localhost:8000/scan-file/
+```
+Respuesta:
+
+```json
+{
+  "scan_result": {
+    "scan_id": "id",
+    "sha1": "...",
+    "sha256": "...",
+    "md5": "...",
+    "permalink": "https://www.virustotal.com/file/.../analysis/..."
+  },
+  "report_result": {
+    "scan_id": "id",
+    "sha1": "...",
+    "sha256": "...",
+    "md5": "...",
+    "permalink": "https://www.virustotal.com/file/.../analysis/...",
+    "positives": 3,
+    "total": 70,
+    "scans": {
+      "Antivirus1": {"detected": true, "result": "Malware"},
+      "Antivirus2": {"detected": false, "result": null},
+      ...
+    }
+  }
+}
+```
 ## Supociciones 
 
 1.Tiempo de espera para el informe:
